@@ -1,0 +1,25 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Se ejecuta en cada push a la rama 'main'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Paso 1: Checkout del código
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Paso 2: Construir la imagen de Docker
+    - name: Build Docker image
+      run: |
+        docker build -t mi_aplicacion .
+
+    # Paso 3: Ejecutar el contenedor Docker
+    - name: Run Docker container
+      run: |
+        docker run -d -p 8000:8000 mi_aplicacion
